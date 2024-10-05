@@ -1,0 +1,112 @@
+<div class="card my-4">
+    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+      <div class="bg-gradient-info shadow-primary border-radius-lg pt-1 pb-1">
+        <h6 class="text-white text-capitalize ps-3">Voici la liste des soutenances</h6>
+      </div>
+    </div>
+    <div class="card-body px-0 pb-2">
+      <div class="table-responsive p-0">
+        <table class="table align-items-center mb-0">
+          <thead>
+            <tr>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Sujet</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Encadreur</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Présidant</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Rapporteur</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Salle</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Date</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Documents</th>
+              <th class="text-secondary opacity-7"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of soutenances">
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{e.sfe}}</h6>
+                  </div>
+                </div>
+              </td>
+              <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class=" bg-gradient-warning text-white badge mb-0" *ngIf="e.encadreur === user">{{e.encadreur}}</h6>
+                      <h6 class="mb-0 text-sm" *ngIf="e.encadreur != user">{{e.encadreur}}</h6>
+
+                    </div>
+                  </div>
+              </td><td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class=" bg-gradient-warning text-white badge mb-0 " *ngIf="e.president === user">{{e.president}} </h6>
+                      <h6 class="mb-0 text-sm"  *ngIf="e.president != user">{{e.president}} </h6>
+                    </div>
+                  </div>
+              </td>
+              <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class=" bg-gradient-warning text-white badge mb-0" *ngIf="e.rapporteur === user">{{e.rapporteur}}</h6>
+                      <h6 class="mb-0 text-sm" *ngIf="e.rapporteur != user">{{e.rapporteur}}</h6>
+                    </div>
+                  </div>
+              </td>
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{e.salle}}</h6>
+                  </div>
+                </div>
+            </td>
+            <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{e.date | date:'short'}}</h6>
+                  </div>
+                </div>
+            </td>
+            <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <a *ngFor="let f of e.files" class="bg-success text-white badge mt-1" (click)="downloadFile(f.idFile)">{{f.rapport}}</a>
+                  </div>
+                </div>
+            </td>
+            <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <button class="btn bg-gradient-danger btn-sm" data-toggle="modal" data-target="#exampleModal" (click)="setId(e.id)">Note</button>
+                  </div>
+                </div>
+            </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Saisir Note</h5>
+          <button type="button" class="btn-close btn-dark" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="noteForm" (ngSubmit)="onSubmit()"  role="form" class="text-start">
+            <div class="input-group input-group-outline my-3">
+              <label class="form-label">Note</label>
+              <input type="number" class="form-control"   formControlName="note">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" (click)="closeModal()" data-bs-dismiss="modal">Close</button>
+              <button type="submit"  class="btn btn-outline-success" [disabled]="noteForm.invalid">Ajouter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,29 @@
+<form role="form" class="text-start" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group input-group-outline my-3">
+                <input type="text" class="form-control" formControlName="nom" placeholder="Nom">
+            </div>
+            <div class="input-group input-group-outline mb-3">
+                <input type="text" class="form-control" formControlName="prenom" placeholder="Prenom">
+            </div>
+            <div class="input-group input-group-outline mb-3">
+                <input type="tel" class="form-control" formControlName="telephone" placeholder="Telephone">
+            </div>
+        </div>
+        <div class="col-md-6 mt-3">
+            <div class="input-group input-group-outline mb-3">
+                <input type="email" class="form-control" formControlName="email" placeholder="Email">
+            </div>
+            <div class="input-group input-group-outline mb-3">
+                <input type="text" class="form-control" formControlName="username" placeholder="Username">
+            </div>
+            <div class="input-group input-group-outline mb-3">
+                <input type="password" class="form-control" formControlName="password" placeholder="Password">
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="button" (click)="onSubmit()" [disabled]="registerForm.invalid" class="btn bg-gradient-info w-100 my-4 mb-2">Modifier</button>
+    </div>
+</form>

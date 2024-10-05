@@ -1,0 +1,79 @@
+<div class="card my-4">
+    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+      <div class="bg-gradient-info shadow-primary border-radius-lg pt-1 pb-1">
+        <h6 class="text-white text-capitalize ps-3">Voici la liste des soutenances</h6>
+      </div>
+    </div>
+    <div class="card-body px-0 pb-2">
+      <div class="table-responsive p-0">
+        <table class="table align-items-center mb-0">
+          <thead>
+            <tr>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Sujet</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Encadreur</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Présidant</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Rapporteur</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Salle</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Date</th>
+              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Note</th>
+              <th class="text-secondary opacity-7"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{soutenance.sfe}}</h6>
+                  </div>
+                </div>
+              </td>
+              <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">{{soutenance.encadreur}}</h6>
+                    </div>
+                  </div>
+              </td><td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">{{soutenance.president}} </h6>
+                    </div>
+                  </div>
+              </td>
+              <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">{{soutenance.rapporteur}}</h6>
+                    </div>
+                  </div>
+              </td>
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{soutenance.salle}}</h6>
+                  </div>
+                </div>
+            </td>
+            <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{soutenance.date | date:'short'}}</h6>
+                  </div>
+                </div>
+            </td>
+            <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <span *ngIf="note != 0 " class="bg-success text-white badge">{{note}}</span>
+                    <span *ngIf="note == 0 " class="bg-danger text-white badge">En Cours</span>
+                  </div>
+                </div>
+            </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

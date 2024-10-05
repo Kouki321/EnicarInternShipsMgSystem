@@ -1,0 +1,175 @@
+<div class="row" id="test">
+    <div class="col-12">
+        <div class="d-flex px-2 py-1 justify-content-end"> 
+            <button type="button" class="btn btn-primary mb-0 me-3" data-toggle="modal" data-target="#exampleModal" *ngIf="authService.isAdmin()">Ajouter Entreprise</button>
+        </div>
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-info shadow-primary border-radius-lg pt-2 pb-2">
+                    <h6 class="text-white text-capitalize ps-3">Voici la liste des entreprises</h6>
+                </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                <div class="input-group input-group-outline">
+                  <label class="form-label">Type here...</label>
+                  <input type="text" (keyup)="doFilter($event)" class="form-control">
+                </div>
+              </div>
+                <div class="table-responsive p-0" style="overflow: auto; max-height: 500px;"> <!-- Apply overflow and max-height -->
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">SOCIETE</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">ADRESSE</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">TEL</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">REPRESENTANT</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">SPECIALITE</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">EMAIL</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let e of filteredEntreprises">
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{e.nom}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{e.adresse}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{e.telephone}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{e.representant}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{e.specialite}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{e.email}}</h6>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex px-2 py-1" *ngIf="authService.isAdmin()">
+                                        <a class="btn btn-outline-success btn-sm mb-0 me-3" data-toggle="modal" data-target="#exampleModal2" (click)="update(e.id)">Modifier</a>
+                                        <a class="btn btn-outline-danger btn-sm mb-0 me-3" (click)="delete(e.id)">Supprimer</a>
+                                    </div>
+                                    <div class="d-flex px-2 py-1" *ngIf="authService.isStudent()">
+                                        <a  href="mailto:{{e.email}}" class="btn btn-outline-success btn-sm mb-0 me-3 mb-0">Contacter</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajout départment</h5>
+          <button type="button" class="btn-close btn-dark" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="entrepriseForm" (ngSubmit)="onSubmit()"  role="form" class="text-start">
+            <div class="input-group input-group-outline my-3">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-control"   formControlName="nom">
+            </div>
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label" *ngIf="this.i == 0">Specialite</label>
+                <select class="form-control select"  (change)="filter($event)" formControlName="specialite">
+                    <option *ngFor="let s of specialite" [value]="s">{{s}}</option>
+                </select>
+            </div>
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label">Telephone</label>
+                <input type="text" class="form-control"   formControlName="telephone">
+            </div>
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control"   formControlName="email">
+            </div>
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label">Adresse</label>
+                <input type="text" class="form-control"   formControlName="adresse">
+            </div>
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label">Representant</label>
+                <input type="text" class="form-control"   formControlName="representant">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" (click)="closeModal()" data-bs-dismiss="modal">Close</button>
+              <button type="submit"  class="btn btn-outline-success" [disabled]="entrepriseForm.invalid">Ajouter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modfication départment</h5>
+          <button type="button" class="btn-close btn-dark" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="updateForm" (ngSubmit)="onUpdate()"  role="form" class="text-start">
+            <div class="input-group input-group-outline my-3">
+                <input type="text" class="form-control"   formControlName="nom">
+              </div>
+              <div class="input-group input-group-outline my-3">
+                  <input type="text" class="form-control"   formControlName="specialite">
+              </div>
+              <div class="input-group input-group-outline my-3">
+                  <input type="text" class="form-control"   formControlName="telephone">
+              </div>
+              <div class="input-group input-group-outline my-3">
+                  <input type="email" class="form-control"   formControlName="email">
+              </div>
+              <div class="input-group input-group-outline my-3">
+                  <input type="text" class="form-control"   formControlName="adresse">
+              </div>
+              <div class="input-group input-group-outline my-3">
+                  <input type="text" class="form-control"   formControlName="representant">
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" (click)="closeModal2()" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-outline-success" [disabled]="updateForm.invalid">Modifier</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

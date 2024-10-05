@@ -1,0 +1,81 @@
+
+<div class="row">
+<div class="col-12">
+    <div class="card my-4">
+      <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <div class="bg-gradient-info shadow-primary border-radius-lg pt-2 pb-2">
+          <h6 class="text-white text-capitalize ps-3">Voici la liste des etudiants</h6>
+        </div>
+      </div>
+      <div class="card-body px-0 pb-2">
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+          <div class="input-group input-group-outline">
+            <label class="form-label">Type here...</label>
+            <input type="text" (keyup)="doFilter($event)" class="form-control">
+          </div>
+        </div>
+        <div class="table-responsive p-0" style="overflow: auto; max-height: 400px;"> <!-- Apply overflow and max-height -->
+            <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nom</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Prenom</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tel</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
+                <th class="text-secondary opacity-7"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let e of filteredEtudiants">
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">{{e.nom}}</h6>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{e.prenom}}</h6>
+                      </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{e.telephone}}</h6>
+                      </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{e.email}}</h6>
+                      </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{e.department}}</h6>
+                      </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex px-2 py-1">
+                        <span (click)="activer(e.userId, e.enabled)" >
+                            <i class="fa fa-toggle-on fa-2xl" style="color: rgb(60, 60, 230); font-size: 25px;" *ngIf="e.enabled === true " aria-hidden="true"></i>
+                            <i class="fa fa-toggle-off fa-2xl" style="color: rgb(60, 60, 230);font-size: 25px;" *ngIf="e.enabled === false "  aria-hidden="true"></i>
+                          </span>
+                    </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

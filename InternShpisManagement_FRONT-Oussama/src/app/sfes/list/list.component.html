@@ -1,0 +1,105 @@
+
+  <div class="card my-4">
+      <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <div class="bg-gradient-info shadow-primary border-radius-lg pt-2 pb-2">
+          <h6 class="text-white text-capitalize ps-3">Voici la liste des sfes</h6>
+        </div>
+      </div>
+      <div class="card-body px-0 pb-2">
+        <div class="table-responsive p-0">
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">ID</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">SUJET</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">ENCADREUR</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">ETUDIANT</th>
+
+                <th class="text-secondary opacity-7"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let e of sfes">
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">{{e.id}}</h6>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{e.sujet}}</h6>
+                      </div>
+                    </div>
+                </td><td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{e.encadreur.nom}} {{e.encadreur.prenom}} </h6>
+                      </div>
+                    </div>
+                </td><td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{e.etudiant.nom}} {{e.etudiant.prenom}}</h6>
+                      </div>
+                    </div>
+                </td>
+                <td>
+                  <button class="btn btn-outline-success btn-sm mb-0 me-3" data-toggle="modal" data-target="#exampleModal" 
+                  (click)="update(e.id)">Planifier</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Planification de soutenance</h5>
+          <button type="button" class="btn-close btn-dark" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form" [formGroup]="data" (ngSubmit)="onUpdate()" class="text-start">
+            <div class="input-group input-group-outline my-3">
+              <input type="text" class="form-control" formControlName="sfe" >
+            </div>
+            <div class="input-group input-group-outline my-3">
+              <input type="text" class="form-control" formControlName="encadreur">
+            </div>
+            <div class="input-group input-group-outline my-3">
+              <select class="form-control" formControlName="president" >
+                <option value="">Choisir le Président</option>
+                <option [value]="p.userId" *ngFor="let p of presidents">{{p.nom}} {{p.prenom}}</option>
+            </select>
+            </div>
+            <div class="input-group input-group-outline my-3">
+              <select class="form-control" formControlName="rapporteur" >
+                <option value="">Choisir le Rapporteur</option>
+                <option [value]="p.userId" *ngFor="let p of rapporteurs">{{p.nom}} {{p.prenom}}</option>
+              </select>
+            </div>
+            <div class="input-group input-group-outline my-3">
+              <input type="datetime-local" class="form-control" formControlName="date">
+            </div>
+            <div class="input-group input-group-outline my-3">
+              <select class="form-control" formControlName="salle" >
+                <option value="">Choisir la salle</option>
+                <option [value]="s.id" *ngFor="let s of salles">{{s.nom}}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" (click)="closeModal()" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-success" [disabled]="data.invalid" (click)="onUpdate()">Planifier</button>
+        </div>
+      </div>
+    </div>
+  </div>

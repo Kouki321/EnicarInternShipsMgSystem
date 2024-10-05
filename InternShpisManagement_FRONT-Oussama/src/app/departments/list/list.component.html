@@ -1,0 +1,103 @@
+<div class="row" id="test">
+  <div class="col-12">
+      <div class="d-flex px-2 py-1 justify-content-end"> <!-- Align to the right -->
+          <button type="button" class="btn bg-gradient-primary  mb-0 me-3" data-toggle="modal" data-target="#exampleModal">Ajouter Department</button>
+      </div>
+      <div class="card my-4">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-info shadow-primary border-radius-lg pt-2 pb-2">
+                  <h6 class="text-white text-capitalize ps-3">Voici la liste des départments</h6>
+              </div>
+          </div>
+          <div class="card-body px-0 pb-2">
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+              <div class="input-group input-group-outline">
+                <label class="form-label">Type here...</label>
+                <input type="text" (keyup)="doFilter($event)" class="form-control">
+              </div>
+            </div>
+              <div class="table-responsive p-0" style="overflow: auto; max-height: 400px;"> <!-- Apply overflow and max-height -->
+                  <table class="table align-items-center mb-0">
+                      <thead>
+                          <tr>
+                              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">ID</th>
+                              <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">DEPARTMENT</th>
+                              <th class="text-secondary opacity-7"></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let e of filteredDepartments">
+                              <td>
+                                  <div class="d-flex px-2 py-1">
+                                      <div class="d-flex flex-column justify-content-center">
+                                          <h6 class="mb-0 text-sm">{{e.id}}</h6>
+                                      </div>
+                                  </div>
+                              </td>
+                              <td>
+                                  <div class="d-flex px-2 py-1">
+                                      <div class="d-flex flex-column justify-content-center">
+                                          <h6 class="mb-0 text-sm">{{e.nom}}</h6>
+                                      </div>
+                                  </div>
+                              </td>
+                              <td>
+                                  <div class="d-flex px-2 py-1">
+                                      <a class="btn btn-outline-success btn-sm mb-0 me-3" data-toggle="modal" data-target="#exampleModal2" (click)="update(e.id)">Modifier</a>
+                                      <a class="btn btn-outline-danger btn-sm mb-0 me-3" (click)="delete(e.id)">Supprimer</a>
+                                  </div>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ajout départment</h5>
+              <button type="button" class="btn-close btn-dark" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()"  role="form" class="text-start">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">Deparmtent</label>
+                  <input type="text" class="form-control"   formControlName="nom">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-danger" (click)="closeModal()" data-bs-dismiss="modal">Close</button>
+                  <button type="submit"  class="btn btn-outline-success" [disabled]="departmentForm.invalid">Ajouter</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modfication départment</h5>
+              <button type="button" class="btn-close btn-dark" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="updateForm" (ngSubmit)="onUpdate()"  role="form" class="text-start">
+                <div class="input-group input-group-outline my-3">
+                  <input type="text" class="form-control"  formControlName="nom">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-danger" (click)="closeModal()" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-outline-success" [disabled]="updateForm.invalid">Modifier</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
